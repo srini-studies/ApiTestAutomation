@@ -1,4 +1,5 @@
 # ApiTestAutomation
+```
 .Net xUnit Api Test Automation Project
 
 Automated API tests using xUnit, .NET (C#), and HttpClient. 
@@ -44,7 +45,6 @@ Project Structure:
         ApiTests                # Tests and Assertions
     appsettings.json            # Base Url and Logging
     ReadMe.md                   # Readme file
-
 
 
 Set up the project:
@@ -93,5 +93,5 @@ jobs:
     - name: Run tests
       run: dotnet test --no-build --configuration Release --verbosity normal
 
-
+```
 
