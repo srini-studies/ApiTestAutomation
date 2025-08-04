@@ -58,7 +58,7 @@ Build:
     dotnet build                # builds the project 
 
 Running the Tests:
-    dotnet run                  # runs the tests tagged with [Fact] attribute
+    dotnet test                  # runs the tests tagged with [Fact] attribute
    
 
 CI/CD Integration:
