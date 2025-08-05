@@ -19,13 +19,14 @@ namespace CategoryApiTestAutomation.Service
 
         public async Task<JsonNode?> GetApiResponseAsync()
         {
-            // Arrange
+            // Arrange - the endpoint
             string endpoint = $"/{ApiConstants.ApiVersion}/{ApiConstants.ResourcePath}?{ApiConstants.QueryString}";
             _logger.LogInformation("Sending GET request to {Endpoint}", endpoint);
 
             // Act
             try
             {
+                // http GET method
                 var response = _httpClient.GetAsync(endpoint);
 
                 response?.Result.EnsureSuccessStatusCode();
@@ -33,9 +34,11 @@ namespace CategoryApiTestAutomation.Service
                 statusCode.Should().Be(HttpStatusCode.OK);
                 _logger.LogInformation("Received successful response: {StatusCode}", statusCode);
 
+                // convert the response to string
                 var content = await response!.Result.Content.ReadAsStringAsync();
                 _logger.LogDebug("Response content: {Content}", content);
 
+                // parse the content string into json nodes
                 var node = JsonNode.Parse(content);
                 return node;
             }

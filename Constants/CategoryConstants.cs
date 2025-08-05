@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace CategoryApiTestAutomation.Constants
 {
+    // constants used for test assertions
     internal class CategoryConstants
     {
         public const string Key_Name = "Name";

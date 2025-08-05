@@ -18,9 +18,11 @@ namespace CategoryApiTestAutomation.Tests
 
         public async Task InitializeAsync()
         {
+            // generic host builder to configure test environment - load configuration appsettings, setup dependency inejction and logging
             _host = Host.CreateDefaultBuilder()
                 .ConfigureAppConfiguration((context, config) =>
                 {
+                    // load appsettings.json into configuration
                     config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
                 })
                 .ConfigureLogging(logging =>
@@ -33,9 +35,10 @@ namespace CategoryApiTestAutomation.Tests
                     // Bind ApiSettings from configuration
                     var apiSettings = new ApiSettings();
                     context.Configuration.GetSection("ApiSettings").Bind(apiSettings);
+                    // Add apiSettings to dependency injection
                     services.AddSingleton(apiSettings);
 
-                    // Register HttpClient using IHttpClientFactory with base address
+                    // Register HttpClient with ApiService using IHttpClientFactory with base address
                     services.AddHttpClient<ApiService>(client =>
                     {
                         client.BaseAddress = new Uri(apiSettings.BaseUrl);
@@ -43,8 +46,10 @@ namespace CategoryApiTestAutomation.Tests
                 })
                 .Build();
 
+            // Start the host and initialise all the services
             await _host.StartAsync();
 
+            // Get ApiService and logger from the DI container
             _apiService = _host.Services.GetRequiredService<ApiService>();
             _logger = _host.Services.GetRequiredService<ILogger<ApiTests>>();
             _logger.LogInformation("Starting test execution...");
